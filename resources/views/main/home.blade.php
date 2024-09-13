@@ -47,9 +47,8 @@
             <div v-else>
                 <a class="btn bg-green m-2 button-home" href="#" @click.prevent="participantsIsShown = false">←</a> Listes des participants
                 <ul class="pt-3">
-                    <li class="member" v-for="p in participants">🧑‍💻 @{{p['nomequipe']}}</li>
+                    <li class="member" v-for="p in participants">🧑‍💻 @{{p['nomequipe']}} <a class="btn bg-info m-2 button-default" :href="`/affiche/${p['idequipe']}`"> Consulter les membres de : @{{p['nomequipe']}}</a></li>
                 </ul>
-
             </div>
         </div>
     </div>

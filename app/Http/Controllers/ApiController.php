@@ -44,6 +44,11 @@ class ApiController extends Controller
         return response()->json(Membre::all());
     }
 
+    function getMemberByEquipe($idh)
+    {
+        return response()->json(Equipe::getMemberByEquipe($idh));
+    }
+
     /**
      * Retourne les membres d'une équipe.
      * @param $idequipe

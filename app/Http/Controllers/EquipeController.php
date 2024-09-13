@@ -27,7 +27,7 @@ class EquipeController extends Controller
      * Méthode de connexion de l'équipe.
      * Vérifie les informations de connexion et connecte l'équipe.
      */
-    public function connect(Request $request)
+    public function connect()
     {
         $validated = $request->validate(
             [

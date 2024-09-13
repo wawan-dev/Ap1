@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiDocController;
 use App\Http\Controllers\EquipeController;
 use App\Http\Controllers\HackathonController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\MembreController;
 use App\Http\Middleware\IsEquipeConnected;
 use App\Models\Equipe;
 use App\Utils\SessionHelpers;
@@ -26,6 +27,14 @@ Route::get('/doc-api/', [ApiDocController::class, 'liste'])->name('doc-api');
 Route::get('/doc-api/hackathons', [ApiDocController::class, 'listeHackathons'])->name('doc-api-hackathons');
 Route::get('/doc-api/membres', [ApiDocController::class, 'listeMembres'])->name('doc-api-membres');
 Route::get('/doc-api/equipes', [ApiDocController::class, 'listeEquipes'])->name('doc-api-equipes');
+
+
+
+
+//Route pour les membres
+Route::get('/affiche/{equipe}', [MembreController::class, 'afficher_membre']);
+
+
 
 // Routes protégées nécessitant une session active, pour les équipes.
 // Proctection par le middleware IsEquipeConnected (voir app/Http/Middleware/IsEquipeConnected.php)
