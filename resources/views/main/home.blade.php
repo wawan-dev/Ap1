@@ -36,11 +36,11 @@
                 @endif
 
                 <div class="d-flex flex-wrap pt-3">
-                    $place = ge
-                    @if($hackathon->nbplaceeqmax != $nbplace ){
+                    
+                    @if($hackathon->nbplaceeqmax > $nbplace && \Carbon\Carbon::now()->lt($hackathon->datefininscription)   )
                         <a class="btn bg-green m-2 button-home" href="/join?idh=<?= $hackathon->idhackathon ?>">Rejoindre</a>
                         <a class="btn bg-green m-2 button-home" href="{{route('create-team')}}">Créer mon équipe</a>
-                    }
+                    @endif
 
                     <a class="btn bg-green m-2 button-home" href="#" @click.prevent="getParticipants">
                         <span v-if="!loading">Les participants</span>

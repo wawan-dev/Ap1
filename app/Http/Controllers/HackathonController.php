@@ -13,7 +13,7 @@ class HackathonController extends Controller
         if (!SessionHelpers::isConnected()) {
             return redirect("/login")->withErrors(['errors' => "Vous devez être connecté pour accéder à cette page."]);
         }
-
+        
         // Récupération de l'équipe connectée
         $equipe = SessionHelpers::getConnected();
 

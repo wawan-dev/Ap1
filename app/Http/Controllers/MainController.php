@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipe;
 use App\Models\Hackathon;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Constraint\Count;
 
 class MainController extends Controller
 {
@@ -16,7 +18,8 @@ class MainController extends Controller
         
         $hackathon = Hackathon::getActiveHackathon();
 
-        $nbplace = Hackathon::count();
+        $equipehack = Equipe::getEquipesInHackhon($hackathon->idhackathon);
+        $nbplace = $equipehack->count();
 
         // Affichage de la vue, avec les données récupérées
         return view('main.home', [
