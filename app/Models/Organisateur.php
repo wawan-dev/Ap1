@@ -19,4 +19,8 @@ class Organisateur extends Model
     {
         return $this->hasMany(Hackathon::class, 'idorganisateur');
     }
+
+    public function getOrganisateur($id){
+        
+    }
 }

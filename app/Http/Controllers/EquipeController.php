@@ -137,6 +137,8 @@ class EquipeController extends Controller
                 'idhackathon' => $hackathon->idhackathon,
                 'dateinscription' => date('Y-m-d H:i:s'),
             ]);
+            EmailHelpers::sendEmail($equipe->login, "Hackaton rejoins avec succès", "email.joinemail", ['equipe' => $equipe, 'hackaton' => $hackathon,'organisateur' => $hackathon->organisateur]);
+
 
             // Redirection vers la page de profil de l'équipe avec un message de succès
             return redirect("/me")->with('success', "Votre équipe a bien été créée. Vérifiez votre boîte mail pour confirmer votre inscription.");
