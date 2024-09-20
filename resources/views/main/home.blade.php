@@ -22,6 +22,17 @@
                         au <?= date_create($hackathon->dateheurefinh)->format("d/m/Y H:i") ?></div>
                     <div><em>Lieu :</em> <?= $hackathon->ville ?></div>
                     <div><em>Organisateur :</em> <?= "{$organisateur->nom} {$organisateur->prenom}" ?></div>
+                    <br>
+                    @if($hackathon->nbplaceeqmax - $nbplace == 0) 
+                    <p>Désolé cet hackaton à atteint le nombre maximum de place.</p> 
+                    @endif
+                    @if($hackathon->nbplaceeqmax - $nbplace == 1) 
+                    <p>Il ne reste plus que {{$hackathon->nbplaceeqmax - $nbplace }} place</p>
+                    @endif
+                    @if($hackathon->nbplaceeqmax - $nbplace > 1) 
+                    <p>Il ne reste plus que {{$hackathon->nbplaceeqmax - $nbplace }} places</p>
+                    @endif
+                   
                 </div>
 
                 <!-- Affichage des messages d'erreurs -->
@@ -40,6 +51,7 @@
                     @if($hackathon->nbplaceeqmax > $nbplace && \Carbon\Carbon::now()->lt($hackathon->datefininscription)   )
                         <a class="btn bg-green m-2 button-home" href="/join?idh=<?= $hackathon->idhackathon ?>">Rejoindre</a>
                         <a class="btn bg-green m-2 button-home" href="{{route('create-team')}}">Créer mon équipe</a>
+                        
                     @endif
 
                     <a class="btn bg-green m-2 button-home" href="#" @click.prevent="getParticipants">

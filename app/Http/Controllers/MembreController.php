@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipe;
+use App\Models\Membre;
 use Illuminate\Http\Request;
 
 class MembreController extends Controller
@@ -11,4 +12,6 @@ class MembreController extends Controller
         $lesMembre = $equipe->membres;
         return view('membre.affiche', ['lesmembres' => $lesMembre]);
     }
+
+  
 }

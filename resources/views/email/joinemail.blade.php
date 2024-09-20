@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <h1>Confirmation d'inscription</h1>
+    <h1>Confirmation d'inscription à {{$hackaton->ville}}</h1>
     <p>Cher {{ $equipe->nomequipe }},</p>
     <p>Merci de votre inscription a notre hackaton. Nous sommes ravis de vous avoir parmi nous !</p>
     <p>L'hackaton aura lieu a la date du {{$hackaton->dateheuredebuth}}</p>

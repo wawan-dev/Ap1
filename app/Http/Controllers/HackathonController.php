@@ -43,7 +43,7 @@ class HackathonController extends Controller
             return redirect("/me")->with('success', "Inscription réussie, vous faites maintenant partie du hackathon.");
         } catch (\Exception $e) {
             // Redirection vers la page d'accueil avec un message d'erreur
-            return redirect("/")->withErrors(['Vous êtes déja inscrit pour cette hackathon !' => "Erreur"]);
+            return redirect("/")->withErrors(['Erreur' => "Vous êtes déja inscrit pour cette hackathon !"]);
         }
     }
 }

@@ -203,6 +203,11 @@ class EquipeController extends Controller
             [
                 'nom' => 'required|string|max:255',
                 'prenom' => 'required|string|max:255',
+                'email' => 'required|string|max:255',
+                'telephone' => 'required|string|max:10',
+                'naiss' => 'required|date',
+
+
             ],
             [
                 'required' => 'Le champ :attribute est obligatoire.',
@@ -212,6 +217,11 @@ class EquipeController extends Controller
             [
                 'nom' => 'nom',
                 'prenom' => 'prénom',
+                'email' => 'email',
+                'telephone' => 'telephone',
+                'datenaissance' => 'naiss',
+                
+                
             ]
         );
 
@@ -220,16 +230,32 @@ class EquipeController extends Controller
             $membre = new Membre();
             $membre->nom = $request->input('nom');
             $membre->prenom = $request->input('prenom');
+            $membre->email = $request->input('email');
+            $membre->telephone = $request->input('telephone');
+            $membre->datenaissance = $request->input('naiss');
+            $membre->lienportfolio = $request->input('portfolio');
             $membre->idequipe = $equipe->idequipe;
             $membre->save();
 
             // TODO : envoyer un email de confirmation au membre en s'inspirant de la méthode create de EquipeController (emailHelpers::sendEmail)
-
+            EmailHelpers::sendEmail($membre->email, "Nouveau membre hackathon", "email.newmembre", ['membre' => $membre, 'equipe'=>$equipe]);
             // Redirection vers la page de l'équipe
             return redirect("/me")->with('success', "Le membre a bien été ajouté à votre équipe.");
         } catch (\Exception $e) {
             // Redirection vers la page de l'équipe avec un message d'erreur
             return redirect("/me")->withErrors(['errors' => "Une erreur est survenue lors de l'ajout du membre à votre équipe."]);
         }
+    }
+
+    public function supp_membre($id){
+        $membre = Membre::find($id);
+        $membre->delete();
+     
+        return redirect("/me")->with(['success' => "Le membre à bien été supprimer"]);
+    }
+
+    public function modif_equipe(){
+        
+        return view('equipe.modif');
     }
 }

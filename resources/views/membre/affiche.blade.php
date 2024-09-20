@@ -12,6 +12,9 @@
     @foreach($lesmembres as $membre)
         <p> {{$membre->nom}}  {{$membre->prenom}} </p>
     @endforeach
+    <br>
+    <br>
+    <a class="btn bg-info m-2 button-home" href="/"  @click.prevent="participantsIsShown = true"><--</a>
 </div>
 
 
