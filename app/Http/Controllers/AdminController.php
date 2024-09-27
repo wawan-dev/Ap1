@@ -51,4 +51,10 @@ class AdminController extends Controller
         // Redirection vers la page de profil de l'équipe
         return redirect("/doc-api");
     }
+
+    public function logoutadmin()
+    {
+        SessionHelpers::logoutadmin();
+        return redirect()->route('home');
+    }
 }

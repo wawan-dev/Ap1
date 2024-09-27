@@ -4,6 +4,8 @@
 
 @section('content')
     <div class="documentation">
+    <a class="btn btn-danger mx-3" href="/logoutadmin">Se déconnecter</a>
+    <br>
         <div class="card w-200">
             <div class="card-body">
                 <h2 class="text-center">Documentation API (HTML)</h2>
@@ -24,5 +26,10 @@
                 </div>
             </div>
         </div>
+        
+        
     </div>
+
+
+    
 @endsection
