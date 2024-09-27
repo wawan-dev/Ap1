@@ -2,11 +2,13 @@
 
 namespace App\Utils;
 
+use App\Models\Administrateur;
 use App\Models\Equipe;
 
 class SessionHelpers
 {
     static string $sessionKey = "LOGIN";
+    static string $sessionKeyAdmin = "ADMIN";
 
     /**
      * Connecte une équipe, c'est-à-dire stocke l'équipe dans la session
@@ -17,6 +19,14 @@ class SessionHelpers
     {
         session()->put(self::$sessionKey, $equipe);
         session()->save();
+        session()->forget(self::$sessionKeyAdmin);
+    }
+
+    static function loginAdmin(Administrateur $admin): void
+    {
+        session()->put(self::$sessionKeyAdmin, $admin);
+        session()->forget(self::$sessionKey);
+        session()->save();
     }
 
     /**
@@ -26,6 +36,12 @@ class SessionHelpers
     static function logout(): void
     {
         session()->forget(self::$sessionKey);
+        session()->save();
+    }
+
+    static function logoutadmin(): void
+    {
+        session()->forget(self::$sessionKeyAdmin);
         session()->save();
     }
 
@@ -46,6 +62,13 @@ class SessionHelpers
     {
         return session()->has(self::$sessionKey);
     }
+
+    static function isConnectedAdmin(): bool
+    {
+        return session()->has(self::$sessionKeyAdmin);
+    }
+
+
 
     public static function flash(string $type, $message)
     {

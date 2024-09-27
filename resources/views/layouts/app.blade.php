@@ -42,7 +42,11 @@
             <li class="nav-item"><a href="/me" class="nav-link white-link @if (Route::is('me')) {{'active-link'}} @endif">Mon profil</a></li>
             <?php } ?>
 
-            <li class="nav-item"><a href="{{ route("doc-api") }}" class="nav-link white-link @if (Route::is('doc-api')) {{'active-link'}} @endif">🔐 API</a></li>
+            <?php if (!SessionHelpers::isConnectedAdmin()) { ?>
+            <li class="nav-item"><a href="/loginAdmin" class="nav-link white-link @if (Route::is('doc-api')) {{'active-link'}} @endif">🔐 API</a></li>
+            <?php } else { ?>
+            <li class="nav-item"><a href="{{ route("doc-api") }}"  class="nav-link white-link @if (Route::is('doc-api')) {{'active-link'}} @endif">🔐 API</a></li>
+            <?php } ?>
         </ul>
     </header>
 </div>

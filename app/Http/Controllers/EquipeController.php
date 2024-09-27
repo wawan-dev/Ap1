@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Administrateur;
 use App\Models\Equipe;
 use App\Models\Hackathon;
 use App\Models\Inscrire;
@@ -9,6 +10,7 @@ use App\Models\Membre;
 use App\Utils\EmailHelpers;
 use App\Utils\SessionHelpers;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\BinaryOp\Equal;
 
 class EquipeController extends Controller
 {
@@ -45,11 +47,11 @@ class EquipeController extends Controller
         );
 
         // Récupération de l'équipe avec l'email fourni
-        $equipe = Equipe::where('login', $validated['email'])->first();
+        $equipe= Equipe::where('login', $validated['email'])->first();
 
         // Si l'équipe n'existe pas, on redirige vers la page de connexion avec un message d'erreur
         if (!$equipe) {
-            return redirect("/login")->withErrors(['errors' => "Aucune équipe n'a été trouvée avec cet email."]);
+            return redirect("/login")->withErrors(['errors' => "Aucune équipess n'a été trouvée avec cet email."]);
         }
 
         // Si le mot de passe est incorrect, on redirige vers la page de connexion avec un message d'erreur
@@ -254,8 +256,46 @@ class EquipeController extends Controller
         return redirect("/me")->with(['success' => "Le membre à bien été supprimer"]);
     }
 
-    public function modif_equipe(){
-        
-        return view('equipe.modif');
+    public function modif_equipe($idequipemod){
+        $equipe = Equipe::find($idequipemod);
+        return view('equipe.modif', ['connected' => $equipe,]);
+    }
+
+    public function verif_modif_equipe(Request $request, $idequipe){
+        $equipe = Equipe::find($idequipe);
+        $nom = $request->input('name');
+        $email = $request->input('email');
+        $NewPassword = $request->input('NewPassword');
+        $VerifyNewPassword = $request->input('VerifyNewPassword');
+
+        if($NewPassword == $VerifyNewPassword){
+            if($equipe->password == bcrypt($NewPassword)){
+
+                return redirect("/modif_equipe/$idequipe")->withErrors(['errors' => "Vous pouver pas remettre le même mot de passe que avant"]);
+            }
+
+            if($NewPassword =='' && $VerifyNewPassword==''){
+                $equipe->nomequipe = $nom;
+                $equipe->login = $email;
+                $equipe->save();
+            }
+            else{
+                if(strlen($NewPassword)>=8){
+                    $equipe->nomequipe = $nom;
+                    $equipe->login = $email;
+                    $equipe->password = bcrypt($NewPassword);
+                    $equipe->lienprototype = '123';
+                    $equipe->save();
+                }
+                else{
+                    return redirect("/modif_equipe/$idequipe")->withErrors(['errors' => "Votre nouveau mot de passe doit faire minimum 8 caractères"]);
+                }
+            }
+            return redirect("/me")->with(['success' => "modification réussie !"]);
+        }
+        else{
+            return redirect("/modif_equipe/$idequipe")->withErrors(['errors' => "Les mots de passe saisie ne sont pas identiques."]);
+        }
+
     }
 }

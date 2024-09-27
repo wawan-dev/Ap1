@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="card-actions">
-                        <a href="/modif_equipe" class="btn btn-primary btn-small">Modifier équipe</a>
+                        <a href="/modif_equipe/{{$connected->idequipe}}" class="btn btn-primary btn-small">Modifier équipe</a>
                         <a href="/logout" class="btn btn-danger btn-small">Déconnexion</a>
                     </div>
                 </div>

@@ -2,3 +2,44 @@
     width : 150px;
     height : 50px;
     }
+
+.fullContainer {
+    background-color: #f5f7fa; /* Soft background */
+}
+.form-container {
+    background-color: #ffffff; /* White background */
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border-radius: 10px; /* Rounded corners */
+    max-width: 400px; /* Max width */
+    width: 100%; /* Full width */
+}
+.form-container input[type="text"], .form-container input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.form-container input[type="submit"] {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+.form-container input[type="submit"]:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+/* Heading Styling */
+.form-header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
