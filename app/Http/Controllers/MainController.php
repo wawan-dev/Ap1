@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipe;
+use App\Models\Inscrire;
 use App\Models\Hackathon;
 use Illuminate\Http\Request;
+use App\Utils\SessionHelpers;
 use PHPUnit\Framework\Constraint\Count;
 
 class MainController extends Controller
@@ -15,9 +17,9 @@ class MainController extends Controller
     public function home()
     {
         // Récuération du hackathon actif (celui en cours)
-        
+        $equipe = SessionHelpers::getConnected();
         $hackathon = Hackathon::getActiveHackathon();
-
+        $inscrit = Inscrire::getallinscription();
         $equipehack = Equipe::getEquipesInHackhon($hackathon->idhackathon);
         $nbplace = $equipehack->count();
 
@@ -26,6 +28,9 @@ class MainController extends Controller
             'hackathon' => $hackathon,
             'organisateur' => $hackathon->organisateur,
             'nbplace' => $nbplace,
+            'equipeinscrit'=>$equipehack,
+            'connected'=>$equipe,
+            
         ]);
     }
 

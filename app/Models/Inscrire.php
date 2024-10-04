@@ -16,5 +16,10 @@ class Inscrire extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    protected $fillable = ['idhackathon', 'idequipe', 'dateinscription'];
+    protected $fillable = ['idhackathon', 'idequipe', 'dateinscription','datedesinscription'];
+
+    public static function getallinscription()
+    {
+        return Inscrire::all();
+    }
 }

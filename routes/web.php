@@ -45,6 +45,8 @@ Route::middleware(isEquipeConnected::class)->group(function () {
     Route::post('/membre/add', [EquipeController::class, 'addMembre'])->name('membre-add');
     Route::get('/modif_equipe/{id}', [EquipeController::class, 'modif_equipe']);
     Route::post('/modif_equipe/{id}', [EquipeController::class, 'verif_modif_equipe']);
+    Route::any('/quit-hackathon/{n}/{co}', [HackathonController::class, 'quitterhackathon'])->name('quit-hackathon');
+    
 });
 
 Route::middleware(IsAdminConnected::class)->group(function () {

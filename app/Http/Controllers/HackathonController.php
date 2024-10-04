@@ -7,6 +7,7 @@ use App\Models\Hackathon;
 use App\Utils\EmailHelpers;
 use Illuminate\Http\Request;
 use App\Utils\SessionHelpers;
+use Illuminate\Support\Facades\DB;
 
 class HackathonController extends Controller
 {
@@ -27,12 +28,22 @@ class HackathonController extends Controller
         // Récupération de l'id du hackathon actif
         $idh = $hackathon->idhackathon;
 
+        
+        $inscrire = DB::table('INSCRIRE')->where('idhackathon', $idh)->where('idequipe', $equipe->idequipe)->first();
+        if($inscrire != null && $inscrire->datedesinscription){
+            return redirect("/")->withErrors(['Erreur' => "Vous pouvez pas vous réinscrire après une désinscription"]);
+        }
+
        
         try{
             // Inscription de l'équipe au hackathon
             $inscription = new Inscrire();
             $inscription->idhackathon = $idh;
             $inscription->idequipe = $equipe->idequipe;
+
+            
+
+
             $inscription->dateinscription = today();
             $inscription->save();
 
@@ -46,4 +57,27 @@ class HackathonController extends Controller
             return redirect("/")->withErrors(['Erreur' => "Vous êtes déja inscrit pour cette hackathon !"]);
         }
     }
+
+    public function quitterhackathon($idhack, $idequipe) {
+        
+            if (!SessionHelpers::isConnected()) {
+                return redirect("/login")->withErrors(['errors' => "Vous devez être connecté pour accéder à cette page."]);
+            }
+    
+            DB::table('INSCRIRE')
+            ->where('idhackathon', $idhack)
+            ->where('idequipe', $idequipe)
+            ->update(['datedesinscription' => now()]);
+        
+            // Affecter la date de désinscription et sauvegarder
+
+    
+            return redirect("/")->with('success', "Désinscription réussie.");
+        }
+        
+    
+    
+    
+
+    
 }

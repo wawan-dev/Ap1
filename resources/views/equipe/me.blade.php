@@ -32,7 +32,7 @@
                         @if ($hackathon != null)
                             <h5>Votre équipe est inscrite au Hackathon <br><br> « {{ $hackathon->thematique }} »</h5>
                             <br/>
-                            <img src="{{ $hackathon->affiche }}" alt="Affiche de l'évènement." class="w-50"/>
+                            <img src="{{ $hackathon->affiche }}" class="w-50"/>
                         @else
                             <p>
                                 Vous ne participez à aucun évènement.

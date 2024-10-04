@@ -176,6 +176,8 @@ class EquipeController extends Controller
         // Récupération de l'équipe connectée
         $equipe = SessionHelpers::getConnected();
 
+        $inscription = Inscrire::getallinscription();
+
         // Récupération des membres de l'équipe
         $membres = $equipe->membres;
 
@@ -187,7 +189,7 @@ class EquipeController extends Controller
         // Voir la méthode membres() dans le modèle Equipe équivalente à la ligne précédente.
         $membres = $equipe->membres()->get();
 
-        return view('equipe.me', ['connected' => $equipe, 'membres' => $membres, 'hackathon' => $hackathon, 'membres' => $membres]);
+        return view('equipe.me', ['connected' => $equipe, 'membres' => $membres, 'hackathon' => $hackathon, 'membres' => $membres, 'inscription'=>$inscription]);
     }
 
     /**

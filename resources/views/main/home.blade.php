@@ -10,7 +10,12 @@
     <div v-scope v-cloak class="d-flex flex-column justify-content-center align-items-center bannerHome">
         <h1>Bienvenue sur Hackat'innov 👋</h1>
         <div class="col-12 col-md-9 d-flex">
-            <img src="<?= $hackathon->affiche ?>" class="affiche d-md-block d-none" alt="Affiche de l'évènement.">
+        <?php
+        // Conversion du blob en base64
+        $base64 = base64_encode($hackathon->affiche);
+        ?>
+
+        <img src="data:image/jpeg;base64,<?= $base64 ?>" class="affiche d-md-block d-none" alt="Affiche de l'évènement.">
             <div class="px-5" v-if="!participantsIsShown">
                 <h2><?= $hackathon->thematique ?></h2>
                 <p><?= nl2br($hackathon->objectifs) ?></p>
@@ -53,6 +58,13 @@
                         <a class="btn bg-green m-2 button-home" href="{{route('create-team')}}">Créer mon équipe</a>
                         
                     @endif
+                    @foreach($equipeinscrit as $n)
+                    @if(\Carbon\Carbon::now()->lt($hackathon->datefininscription) && $n->idequipe == $connected->idequipe  && $n->datedesinscription == null)
+                    <a class="btn bg-green m-2 button-home" href="{{ route('quit-hackathon', ['n' => $n->idhackathon, 'co' => $n->idequipe]) }}">Quitter l'hackathon</a>
+                    @endif
+
+                    @endforeach
+
 
                     <a class="btn bg-green m-2 button-home" href="#" @click.prevent="getParticipants">
                         <span v-if="!loading">Les participants</span>
@@ -63,7 +75,11 @@
             <div v-else>
                 <a class="btn bg-green m-2 button-home" href="#" @click.prevent="participantsIsShown = false">←</a> Listes des participants
                 <ul class="pt-3">
+                    @foreach($equipeinscrit as $n)
+                    @if($n->datedesinscription == null)
                     <li class="member" v-for="p in participants">🧑‍💻 @{{p['nomequipe']}} <a class="btn bg-info m-2 button-default" :href="`/affiche/${p['idequipe']}`"> Consulter les membres de : @{{p['nomequipe']}}</a></li>
+                    @endif
+                    @endforeach
                 </ul>
             </div>
         </div>
