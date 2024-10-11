@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApiDocController;
 use App\Http\Controllers\EquipeController;
 use App\Http\Controllers\HackathonController;
+use App\Http\Controllers\historiqueController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MembreController;
 use App\Http\Middleware\IsAdminConnected;
@@ -58,4 +59,6 @@ Route::middleware(IsAdminConnected::class)->group(function () {
 
     Route::get('/logoutadmin', [AdminController::class, 'logoutadmin']);
 });
+
+Route::get('/historique', [historiqueController::class, 'Listerhackaton'])->name('historique');
 

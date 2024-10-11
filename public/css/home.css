@@ -70,3 +70,13 @@
     font-size: 17px;
     font-weight: 200;
 }
+
+.cardRadius {
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9); /* Slightly opaque white */
+    width: 90%;
+    max-width: 450px; /* Keep it centered and within bounds */
+    padding: 20px; /* Adjust padding to ensure content fits well */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    text-align: center;
+}

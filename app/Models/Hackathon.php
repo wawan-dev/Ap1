@@ -22,7 +22,7 @@ class Hackathon extends Model
      */
     public static function getActiveHackathon(): Hackathon
     {
-        return Hackathon::where('dateheurefinh', '>', now())->orderBy('dateheuredebuth')->first();
+        return Hackathon::where('datefininscription', '>', now())->orderBy('dateheuredebuth')->first();
     }
 
     public function organisateur()

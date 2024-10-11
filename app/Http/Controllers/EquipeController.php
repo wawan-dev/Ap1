@@ -176,13 +176,13 @@ class EquipeController extends Controller
         // Récupération de l'équipe connectée
         $equipe = SessionHelpers::getConnected();
 
-        $inscription = Inscrire::getallinscription();
+        $inscription = Inscrire::getinscription($equipe->idequipe);
 
         // Récupération des membres de l'équipe
         $membres = $equipe->membres;
 
         // Récupération du hackathon ou l'équipe est inscrite
-        $hackathon = $equipe->hackathons()->first();
+        $hackathon = $equipe->hackathons()->get();
 
         // Membre de l'équipe,
         // Membre::where('idequipe', $equipe->idequipe)->get(); // Ancienne méthode

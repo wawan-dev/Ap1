@@ -6,7 +6,7 @@
     <div class="d-flex flex-column justify-content-center align-items-center min-vh-100 bg fullContainer">
 
         <div class="row">
-            <div class="col-3">
+            <div class="col-4">
                 <div class="card cardRadius">
                     <div class="card-body">
                         <!-- Affichage message flash de type "success" -->
@@ -29,10 +29,15 @@
 
                         <h3>Bienvenue "{{ $connected->nomequipe }}"</h3>
 
-                        @if ($hackathon != null)
-                            <h5>Votre équipe est inscrite au Hackathon <br><br> « {{ $hackathon->thematique }} »</h5>
-                            <br/>
-                            <img src="{{ $hackathon->affiche }}" class="w-50"/>
+                        @if ($hackathon != null && $hackathon->isNotEmpty())
+                            <h5>Votre équipe est inscrite au Hackathon <br></h5>
+                            
+                            @foreach($inscription as $i)
+                                @if ($i->datedesinscription == null )
+
+                                    <br> - {{ $i->hackathon->thematique }} 
+                                @endif
+                            @endforeach
                         @else
                             <p>
                                 Vous ne participez à aucun évènement.
@@ -48,7 +53,7 @@
                 </div>
             </div>
             
-            <div class="col-9">
+            <div class="col-8">
                 <div class="card cardRadius mt-3" style="max-width: 1000px;">
                     <div class="card-body">
                         <h3 class="text-start">Membres de votre équipe</h3>
