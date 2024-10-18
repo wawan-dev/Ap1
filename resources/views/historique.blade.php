@@ -33,7 +33,7 @@
                 <div class="d-flex align-items-center mb-2"> 
                      <p class="mb-0"><h3>{{ $h->thematique }}</h3> &nbsp; &nbsp; &nbsp; {{$h->dateheuredebuth}} / {{$h->dateheurefinh}}</p>
                      
-                    <a href="/" class="btn bg-green m-2 button-home">Détail de l'hackathon</a>
+                    <a href="/home_id/{{$h->idhackathon}}" class="btn bg-green m-2 button-home">Détail de l'hackathon</a>
                 </div>
                 
             @endforeach

@@ -57,6 +57,7 @@ class HackathonController extends Controller
             return redirect("/")->withErrors(['Erreur' => "Vous êtes déja inscrit pour cette hackathon !"]);
         }
     }
+    
 
     public function quitterhackathon($idhack, $idequipe) {
         

@@ -24,6 +24,7 @@ Route::get('/about', [MainController::class, 'about'])->name('about');
 Route::get('/login', [EquipeController::class, 'login'])->name('login');
 Route::post('/login', [EquipeController::class, 'connect'])->name('connect');
 Route::get('/join', [HackathonController::class, 'join'])->name('join');
+Route::get('/home/{id}', [MainController::class, 'home_id']);
 Route::any('/create-team', [EquipeController::class, 'create'])->name('create-team'); // Any pour gérer les GET et POST
 Route::get('/supp_membre/{id}', [EquipeController::class, 'supp_membre']);
 Route::get('/supp_membre/{id}', [EquipeController::class, 'supp_membre']);

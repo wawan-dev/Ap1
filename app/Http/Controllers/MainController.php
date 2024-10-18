@@ -34,6 +34,26 @@ class MainController extends Controller
         ]);
     }
 
+    public function home_id($id)
+    {
+        // Récuération du hackathon actif (celui en cours)
+        $equipe = SessionHelpers::getConnected();
+        $hackathon = Hackathon::find($id);
+        $inscrit = Inscrire::getallinscription();
+        $equipehack = Equipe::getEquipesInHackhon($hackathon->idhackathon);
+        $nbplace = $equipehack->count();
+
+        // Affichage de la vue, avec les données récupérées
+        return view('main.home', [
+            'hackathon' => $hackathon,
+            'organisateur' => $hackathon->organisateur,
+            'nbplace' => $nbplace,
+            'equipeinscrit'=>$equipehack,
+            'connected'=>$equipe,
+            
+        ]);
+    }
+
     /**
      * Retourne la page "À propos"
      */
