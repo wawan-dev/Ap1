@@ -61,4 +61,5 @@ Route::middleware(IsAdminConnected::class)->group(function () {
 });
 
 Route::get('/historique', [historiqueController::class, 'Listerhackaton'])->name('historique');
+Route::get('/filtre_nom', [historiqueController::class, 'filtrer_n'])->name('filtrer_n');
 
