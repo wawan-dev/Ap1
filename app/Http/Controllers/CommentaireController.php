@@ -15,7 +15,12 @@ class CommentaireController extends Controller
         $idh = $request->query('idh');
         $hackathon = Hackathon::find($idh);
 
+
         return view('commentaire', ["hackathon" => $hackathon, "equipe" => $equipe]);
+    }
+
+    public function ajouter_commenter (Request $request){
+        
     }
     
 }
