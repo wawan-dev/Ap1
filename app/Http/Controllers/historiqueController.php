@@ -12,9 +12,9 @@ use App\Http\Controllers\Controller;
 class historiqueController extends Controller
 {
     public function Listerhackaton(){
-        
+        $equipe = SessionHelpers::getConnected();
         $hackathon = Hackathon::orderBy('dateheuredebuth', 'asc')->paginate(4);
-        return view('historique',['hackathon' => $hackathon]);
+        return view('historique',['hackathon' => $hackathon, 'connected'=>$equipe]);
     }
 
     public function filtrer_n(Request $request)
@@ -47,7 +47,7 @@ class historiqueController extends Controller
 
         $hackathon = $query->paginate(5); // Pagination
 
-        return view('historique',['hackathon' => $hackathon]);
+        return view('historique',['hackathon' => $hackathon, 'connected'=>$equipe]);
     }
 
 }

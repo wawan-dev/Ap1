@@ -25,9 +25,10 @@
                     <option value="passe" {{ request()->get('status') == 'passe' ? 'selected' : '' }}>Passé</option>
                 </select>
 
+                @if($connected)
                 <label for="participe" class="me-2"> Participe </label>
                 <input type="checkbox" name="participer" id="participer"  class="form-check-input" style="margin-right: 10px;" >
-
+                @endif
                 <button type="submit" class="btn btn-primary ms-2">Rechercher</button>
             </form>
 
