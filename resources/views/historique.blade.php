@@ -25,7 +25,8 @@
                     <option value="passe" {{ request()->get('status') == 'passe' ? 'selected' : '' }}>Passé</option>
                 </select>
 
-
+                <label for="participe" class="me-2"> Participe </label>
+                <input type="checkbox" name="participer" id="participer"  class="form-check-input" style="margin-right: 10px;" >
 
                 <button type="submit" class="btn btn-primary ms-2">Rechercher</button>
             </form>
@@ -43,8 +44,9 @@
 
         
         <div class="d-flex justify-content-center mt-3">
-            {{ $hackathon->links("pagination::bootstrap-5") }} 
+            {{ $hackathon->appends(request()->input())->links("pagination::bootstrap-5") }} 
         </div>
+
     </div>
 </div>
 @endsection

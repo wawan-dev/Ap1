@@ -22,12 +22,8 @@ class HackathonController extends Controller
         $equipe = SessionHelpers::getConnected();
 
         // Le hackathon actif est en paramètre de la requête (idh en GET).
-        $hackathon = Hackathon::getActiveHackathon();
-        // À prévoir : récupérer l'id du hackathon actif depuis la base de données pour éviter les erreurs.
-
-        // Récupération de l'id du hackathon actif
-        $idh = $hackathon->idhackathon;
-
+        $idh = $request->query('idh');
+        $hackathon = Hackathon::find($idh);
         
         $inscrire = DB::table('INSCRIRE')->where('idhackathon', $idh)->where('idequipe', $equipe->idequipe)->first();
         if($inscrire != null && $inscrire->datedesinscription){

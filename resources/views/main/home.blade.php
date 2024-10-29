@@ -54,8 +54,8 @@
                 <div class="d-flex flex-wrap pt-3">
                     
                     @if($hackathon->nbplaceeqmax > $nbplace && \Carbon\Carbon::now()->lt($hackathon->datefininscription)   )
-                        <a class="btn bg-green m-2 button-home" href="/join?idh=<?= $hackathon->idhackathon ?>">Rejoindre</a>
-                        <a class="btn bg-green m-2 button-home" href="{{route('create-team')}}">Créer mon équipe</a>
+                    <a class="btn bg-green m-2 button-home" href="{{ route('join', ['idh' => $hackathon->idhackathon]) }}">Rejoindre</a>
+                    <a class="btn bg-green m-2 button-home" href="{{route('create-team')}}">Créer mon équipe</a>
                         
                     @endif
                     @foreach($equipeinscrit as $n)

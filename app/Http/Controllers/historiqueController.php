@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipe;
+use App\Models\Inscrire;
 use App\Models\Hackathon;
 use Illuminate\Http\Request;
 use App\Utils\SessionHelpers;
@@ -19,6 +20,7 @@ class historiqueController extends Controller
     public function filtrer_n(Request $request)
     {
         $equipe = SessionHelpers::getConnected();
+        $inscription = Inscrire::getinscription($equipe->idequipe);
         $query = Hackathon::query();
         $currentDate = now();
 
@@ -35,6 +37,12 @@ class historiqueController extends Controller
             } elseif ($status == 'passe') {
                 $query->where('dateheurefinh', '<', $currentDate);
             }
+        }
+
+        if ($request->has('participer')) {
+            
+            $idhackathon = $inscription->whereNull('datedesinscription')->pluck('idhackathon')->toArray();
+            $query->whereIn('idhackathon', $idhackathon);
         }
 
         $hackathon = $query->paginate(5); // Pagination
