@@ -22,6 +22,7 @@ class MainController extends Controller
         $inscrit = Inscrire::getallinscription();
         $equipehack = Equipe::getEquipesInHackhon($hackathon->idhackathon);
         $nbplace = $equipehack->count();
+       
 
         // Affichage de la vue, avec les données récupérées
         return view('main.home', [

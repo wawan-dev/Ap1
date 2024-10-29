@@ -59,12 +59,15 @@
                         
                     @endif
                     @foreach($equipeinscrit as $n)
+                    @if($connected)
                     @if(\Carbon\Carbon::now()->lt($hackathon->datefininscription) && $n->idequipe == $connected->idequipe  && $n->datedesinscription == null)
                   
                     <a class="btn bg-green m-2 button-home" href="{{ route('quit-hackathon', ['n' => $n->idhackathon, 'co' => $n->idequipe]) }}" 
                     onclick="return confirm('Êtes-vous sûr de vouloir quitter ce hackathon ?');">
                     Quitter l'hackathon
                     </a>
+
+                    @endif
 
                     @endif
 
