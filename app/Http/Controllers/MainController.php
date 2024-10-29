@@ -36,10 +36,14 @@ class MainController extends Controller
 
     public function home_id($id)
     {
+        
         // Récuération du hackathon actif (celui en cours)
         $equipe = SessionHelpers::getConnected();
         $hackathon = Hackathon::find($id);
-        $inscrit = Inscrire::getallinscription();
+        if (!$hackathon) {
+            abort(404, 'Hackathon not found.');
+        }
+
         $equipehack = Equipe::getEquipesInHackhon($hackathon->idhackathon);
         $nbplace = $equipehack->count();
 

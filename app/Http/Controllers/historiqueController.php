@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipe;
 use App\Models\Hackathon;
 use Illuminate\Http\Request;
+use App\Utils\SessionHelpers;
+use App\Http\Controllers\Controller;
 
 class historiqueController extends Controller
 {
     public function Listerhackaton(){
         
-        $hackathon = Hackathon::paginate(5);
+        $hackathon = Hackathon::orderBy('dateheuredebuth', 'asc')->paginate(4);
         return view('historique',['hackathon' => $hackathon]);
     }
 
     public function filtrer_n(Request $request)
     {
+        $equipe = SessionHelpers::getConnected();
         $query = Hackathon::query();
         $currentDate = now();
 
