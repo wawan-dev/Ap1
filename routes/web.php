@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApiDocController;
+use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\EquipeController;
 use App\Http\Controllers\HackathonController;
 use App\Http\Controllers\historiqueController;
@@ -24,6 +25,7 @@ Route::get('/about', [MainController::class, 'about'])->name('about');
 Route::get('/login', [EquipeController::class, 'login'])->name('login');
 Route::post('/login', [EquipeController::class, 'connect'])->name('connect');
 Route::get('/join', [HackathonController::class, 'join'])->name('join');
+Route::get('/commentaire', [CommentaireController::class, 'commenter'])->name('commentaire');
 Route::get('/home/{id}', [MainController::class, 'home_id']);
 Route::any('/create-team', [EquipeController::class, 'create'])->name('create-team');
 Route::get('/supp_membre/{id}', [EquipeController::class, 'supp_membre']);
