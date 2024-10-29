@@ -24,12 +24,8 @@ Route::get('/about', [MainController::class, 'about'])->name('about');
 // Routes d'authentification et de gestion d'équipe
 Route::get('/login', [EquipeController::class, 'login'])->name('login');
 Route::post('/login', [EquipeController::class, 'connect'])->name('connect');
-Route::get('/join', [HackathonController::class, 'join'])->name('join');
-Route::get('/commentaire', [CommentaireController::class, 'commenter'])->name('commentaire');
 Route::get('/home/{id}', [MainController::class, 'home_id']);
 Route::any('/create-team', [EquipeController::class, 'create'])->name('create-team');
-Route::get('/supp_membre/{id}', [EquipeController::class, 'supp_membre']);
-Route::get('/supp_membre/{id}', [EquipeController::class, 'supp_membre']);
 Route::get('/loginAdmin', [AdminController::class, 'loginadmin']);
 Route::post('/loginAdmin', [AdminController::class, 'connect']);
 
@@ -50,6 +46,13 @@ Route::middleware(isEquipeConnected::class)->group(function () {
     Route::get('/modif_equipe/{id}', [EquipeController::class, 'modif_equipe']);
     Route::post('/modif_equipe/{id}', [EquipeController::class, 'verif_modif_equipe']);
     Route::any('/quit-hackathon/{n}/{co}', [HackathonController::class, 'quitterhackathon'])->name('quit-hackathon');
+
+    Route::get('/supp_membre/{id}', [EquipeController::class, 'supp_membre']);
+    Route::get('/supp_membre/{id}', [EquipeController::class, 'supp_membre']);
+    Route::get('/join', [HackathonController::class, 'join'])->name('join');
+
+    Route::get('/commentaire', [CommentaireController::class, 'commenter'])->name('commentaire');
+    Route::post('/ajouter_commentaire', [CommentaireController::class, 'ajouter_commenter'])->name('ajouter_commentaire');
     
 });
 
