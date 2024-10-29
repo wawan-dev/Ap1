@@ -10,10 +10,26 @@
         <h3 class="text-center">Commentaires sur {{$hackathon->thematique}}</h3>
         
         <div class="row">
+            @if ($errors->any())
+                <div class="alert alert-danger shadow-none mt-3 mb-0">
+                    <ul class="list-unstyled text-start m-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-6 p-5"> 
                 
                 <div class="bg-light p-3" style="max-height: 400px; overflow-y: auto;">
-                    
+                @foreach($commentaires as $commentaire)
+                    @if($commentaire->commentaire != null)
+                    <div class="border-bottom mb-2 pb-2">
+                        <p><strong>{{ $commentaire->equipe->nomequipe}}:</strong> {{ $commentaire->commentaire }}</p>
+                        <small class="text-muted"></small>
+                    </div>
+                    @endif
+                @endforeach
                 </div>
             </div>
 

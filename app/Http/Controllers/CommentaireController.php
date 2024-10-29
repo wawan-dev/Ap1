@@ -16,9 +16,10 @@ class CommentaireController extends Controller
         $equipe = SessionHelpers::getConnected();
         $idh = $request->query('idh');
         $hackathon = Hackathon::find($idh);
+        $commentaires = Inscrire::with('equipe')->where('idhackathon', $idh)->get();
 
 
-        return view('commentaire', ["hackathon" => $hackathon, "equipe" => $equipe]);
+        return view('commentaire', ["hackathon" => $hackathon, "equipe" => $equipe, "commentaires" => $commentaires]);
     }
 
     public function ajouter_commenter (Request $request){
@@ -37,14 +38,26 @@ class CommentaireController extends Controller
         );
         $hackathon = Hackathon::find($request->idhackathon);
         $equipe = SessionHelpers::getConnected();
+        $commentaires = Inscrire::with('equipe')->where('idhackathon', $request->idhackathon)->get();
         
+        $inscription = DB::table('INSCRIRE')
+            ->where('idhackathon', $request->idhackathon)
+            ->where('idequipe', $equipe->idequipe)
+            ->first();
+
+        if (!$inscription) {
+            // Si l'inscription n'existe pas, retournez un message d'erreur
+            return redirect()->back()->withErrors(['Erreur' => "Seuls les participants ayant participé au hackathon peuvent commenter !"])->withInput();
+        }
+
 
         DB::table('INSCRIRE')
             ->where('idhackathon',$request->idhackathon )
             ->where('idequipe', $equipe->idequipe)
             ->update(['commentaire' => $request->post('commentaire')]);
 
-        return view('commentaire', ["hackathon" => $hackathon, "equipe" => $equipe]);
+        return view('commentaire', ["hackathon" => $hackathon, "equipe" => $equipe,  "commentaires" => $commentaires]);
+
     }
     
 }

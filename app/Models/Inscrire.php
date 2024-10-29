@@ -33,5 +33,11 @@ class Inscrire extends Model
     {
         return $this->belongsTo(Hackathon::class, 'idhackathon');
     }
+
+    public function equipe()
+    {
+        return $this->belongsTo(Equipe::class, 'idequipe');
+    }
+
     
 }
