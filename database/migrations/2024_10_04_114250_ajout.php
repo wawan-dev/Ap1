@@ -11,7 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
+        Schema::table('INSCRIRE', function (Blueprint $table) {
+            $table->text('commentaire')->nullable(); // Ajout du champ commentaire
+        });
     }
 
     /**

@@ -19,7 +19,7 @@
 
             <div class="col-md-6 p-4">
                 <h4>Ajouter un commentaire :</h4>
-                <form method="POST" action="{{ route('ajouter_commentaire') }}">
+                <form method="POST" action="{{ route('ajouter_commentaire', ['idhackathon' => $hackathon->idhackathon]) }}">
                     @csrf
                     <div class="mb-3">
                         <textarea name="commentaire" rows="5" class="form-control" placeholder="Votre commentaire ici..." required></textarea>

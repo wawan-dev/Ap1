@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipe;
+use App\Models\Inscrire;
 use App\Models\Hackathon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Equipe;
 use App\Utils\SessionHelpers;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class CommentaireController extends Controller
 {
@@ -20,7 +22,29 @@ class CommentaireController extends Controller
     }
 
     public function ajouter_commenter (Request $request){
+        $request->validate(
+            [
+                'commentaire' => 'required|string|max:500',
+            ],
+            [
+                'required' => 'Le champ :attribute est obligatoire.',
+                'string' => 'Le champ :attribute doit être une chaîne de caractères.',
+                'max' => 'Le champ :attribute ne peut pas dépasser :max caractères.',
+            ],
+            [
+                'commentaire' => 'commentaire',
+            ]
+        );
+        $hackathon = Hackathon::find($request->idhackathon);
+        $equipe = SessionHelpers::getConnected();
         
+
+        DB::table('INSCRIRE')
+            ->where('idhackathon',$request->idhackathon )
+            ->where('idequipe', $equipe->idequipe)
+            ->update(['commentaire' => $request->post('commentaire')]);
+
+        return view('commentaire', ["hackathon" => $hackathon, "equipe" => $equipe]);
     }
     
 }

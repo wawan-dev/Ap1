@@ -21,10 +21,10 @@ class HackathonController extends Controller
         // Récupération de l'équipe connectée
         $equipe = SessionHelpers::getConnected();
 
-        // Le hackathon actif est en paramètre de la requête (idh en GET).
+      
         $idh = $request->query('idh');
         $hackathon = Hackathon::find($idh);
-        
+
         $inscrire = DB::table('INSCRIRE')->where('idhackathon', $idh)->where('idequipe', $equipe->idequipe)->first();
         if($inscrire != null && $inscrire->datedesinscription){
             return redirect("/")->withErrors(['Erreur' => "Vous pouvez pas vous réinscrire après une désinscription"]);

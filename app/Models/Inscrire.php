@@ -17,7 +17,7 @@ class Inscrire extends Model
     public $timestamps = false;
 
 
-    protected $fillable = ['idhackathon', 'idequipe', 'dateinscription','datedesinscription'];
+    protected $fillable = ['idhackathon', 'idequipe', 'dateinscription','datedesinscription','commentaire'];
 
     public static function getinscription($idequipe)
     {
