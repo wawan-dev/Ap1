@@ -21,17 +21,22 @@
             @endif
             <div class="col-md-6 p-5"> 
                 
-                <div class="bg-light p-3" style="max-height: 400px; overflow-y: auto;">
-                @foreach($commentaires as $commentaire)
-                    @if($commentaire->commentaire != null)
-                    <div class="border-bottom mb-2 pb-2">
-                        <p><strong>{{ $commentaire->equipe->nomequipe}}:</strong> {{ $commentaire->commentaire }}</p>
-                        <small class="text-muted"></small>
-                    </div>
-                    @endif
-                @endforeach
+                <div class="bg-light p-3" id='com' style="max-height: 400px; overflow-y: auto;">
+                
                 </div>
             </div>
+
+            <script>
+                function fetchComments() {
+                    fetch("{{ route('fetch-comments', ['id' => $hackathon->idhackathon]) }}")
+                        .then(response => response.text())
+                        .then(content => {
+                            document.getElementById("com").innerHTML = content;
+                        })
+                }
+
+                setInterval(fetchComments, 1000);
+            </script>
 
             <div class="col-md-6 p-4">
                 <h4>Ajouter un commentaire :</h4>

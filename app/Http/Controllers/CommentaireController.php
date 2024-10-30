@@ -59,5 +59,16 @@ class CommentaireController extends Controller
         return view('commentaire', ["hackathon" => $hackathon, "equipe" => $equipe,  "commentaires" => $commentaires]);
 
     }
+
+    public function fetchComments($id)
+    {
+        $commentaires = Inscrire::with('equipe')
+                        ->where('idhackathon', $id)
+                        ->whereNotNull('commentaire')
+                        ->get();
+
+        return view('partials.commentaires', compact('commentaires'));
+    }
+
     
 }

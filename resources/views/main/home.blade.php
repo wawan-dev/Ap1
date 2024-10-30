@@ -76,6 +76,7 @@
                     @if(\Carbon\Carbon::now()->gt($hackathon->dateheurefinh))
                         <a class="btn bg-green m-2 button-home" href="{{ route('commentaire', ['idh' => $hackathon->idhackathon]) }}">Commentaire</a>
                     @endif
+                    
                     <a class="btn bg-green m-2 button-home" href="#" @click.prevent="getParticipants">
                         <span v-if="!loading">Les participants</span>
                         <span v-else>Chargement en cours…</span>
