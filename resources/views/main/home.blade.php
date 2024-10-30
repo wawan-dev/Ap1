@@ -76,23 +76,29 @@
                     @if(\Carbon\Carbon::now()->gt($hackathon->dateheurefinh))
                         <a class="btn bg-green m-2 button-home" href="{{ route('commentaire', ['idh' => $hackathon->idhackathon]) }}">Commentaire</a>
                     @endif
-                    
+
                     <a class="btn bg-green m-2 button-home" href="#" @click.prevent="getParticipants">
                         <span v-if="!loading">Les participants</span>
                         <span v-else>Chargement en cours…</span>
                     </a>
                 </div>
             </div>
-            <div v-else>
+            <div v-if="participantsIsShown">
                 <a class="btn bg-green m-2 button-home" href="#" @click.prevent="participantsIsShown = false">←</a> Listes des participants
                 <ul class="pt-3">
                     @foreach($equipeinscrit as $n)
-                    @if($n->datedesinscription == null)
-                    <li class="member" v-for="p in participants">🧑‍💻 @{{p['nomequipe']}} <a class="btn bg-info m-2 button-default" :href="`/affiche/${p['idequipe']}`"> Consulter les membres de : @{{p['nomequipe']}}</a></li>
-                    @endif
+                        @if($n->datedesinscription == null)
+                            <li class="member">
+                                🧑‍💻 {{ $n->nomequipe }}
+                                <a class="btn bg-info m-2 button-default" href="/affiche/{{ $n->idequipe }}">
+                                    Consulter les membres de : {{ $n->nomequipe }}
+                                </a>
+                            </li>
+                        @endif
                     @endforeach
                 </ul>
             </div>
+
         </div>
     </div>
 
