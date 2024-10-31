@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Administrateur;
 use App\Models\Equipe;
 use App\Models\Hackathon;
 use App\Models\Membre;
@@ -39,7 +40,7 @@ class ApiDocController extends Controller
     {
         // Récupération de toutes les équipes
         $data = Equipe::all();
-
+        
         // Initialisation de la variable hackathon
         $hackathon = null;
 

@@ -63,6 +63,7 @@ Route::middleware(IsAdminConnected::class)->group(function () {
     Route::get('/doc-api/membres', [ApiDocController::class, 'listeMembres'])->name('doc-api-membres');
     Route::get('/doc-api/equipes', [ApiDocController::class, 'listeEquipes'])->name('doc-api-equipes');
 
+    Route::get('/collecter/{equipe}', [EquipeController::class, 'collecter_donner'])->name('collecter');
     Route::get('/logoutadmin', [AdminController::class, 'logoutadmin']);
 });
 

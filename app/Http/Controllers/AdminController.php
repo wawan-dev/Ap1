@@ -30,17 +30,15 @@ class AdminController extends Controller
             ]
         );
 
-        // Récupération de l'équipe avec l'email fourni
+        
         $admin = Administrateur::where('email', $validated['email'])->first();
 
-        // Si l'équipe n'existe pas, on redirige vers la page de connexion avec un message d'erreur
+        
         if (!$admin) {
             return redirect("/loginAdmin")->withErrors(['errors' => "Aucun Administrateursss n'a été trouvée avec cet email."]);
         }
 
-        // Si le mot de passe est incorrect, on redirige vers la page de connexion avec un message d'erreur
-        // Le message d'erreur est volontairement vague pour des raisons de sécurité
-        // En cas d'erreur, on ne doit pas donner d'informations sur l'existence ou non de l'email
+        
         if (!password_verify($validated['password'],  $admin->motpasse)) {
             return redirect("/loginAdmin")->withErrors(['errors' => "Aucun Administrateur n'a été trouvée avec cet email."]);
         }
@@ -48,7 +46,7 @@ class AdminController extends Controller
         // Connexion de l'équipe
         SessionHelpers::loginadmin($admin);
 
-        // Redirection vers la page de profil de l'équipe
+        
         return redirect("/doc-api");
     }
 

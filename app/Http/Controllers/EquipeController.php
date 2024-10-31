@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Administrateur;
 use App\Models\Equipe;
-use App\Models\Hackathon;
-use App\Models\Inscrire;
 use App\Models\Membre;
+use App\Models\Inscrire;
+use App\Models\Hackathon;
 use App\Utils\EmailHelpers;
-use App\Utils\SessionHelpers;
 use Illuminate\Http\Request;
+use App\Utils\SessionHelpers;
+use App\Models\Administrateur;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\BinaryOp\Equal;
 
 class EquipeController extends Controller
@@ -299,5 +301,44 @@ class EquipeController extends Controller
             return redirect("/modif_equipe/$idequipe")->withErrors(['errors' => "Les mots de passe saisie ne sont pas identiques."]);
         }
 
+    }
+
+    public function collecter_donner(Equipe $equipe){
+
+    
+        $data = [
+            'equipe' => $equipe->toArray(),
+            'membres' => $equipe->membres->toArray(),
+        ];
+
+        
+        $jsonContent = json_encode($data, JSON_PRETTY_PRINT);
+
+        
+        $fileName = "collecte_equipe_{$equipe->idequipe}.json";
+        
+        Storage::put("public/{$fileName}", $jsonContent);
+
+        $filePath = storage_path("app/public/{$fileName}");
+
+        $admin = SessionHelpers::getConnectedAdmin();
+
+        if (file_exists($filePath)) {
+            
+            EmailHelpers::sendEmail(
+                $admin->email, 
+                "Demande de donnée équipe $equipe->nomequipe", 
+                "email.collecterdonne", 
+                [
+                    'attachment' => $filePath,
+                    'equipe' => $equipe
+                ]
+            );
+            
+            // Retour à la page précédente avec un message de succès
+            return redirect()->back()->with('success', 'Demande de collecte envoyée avec succès.');
+        }
+    
+        
     }
 }

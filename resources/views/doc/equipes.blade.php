@@ -22,6 +22,15 @@
                         <th scope="col"></th>
                     </tr>
                     </thead>
+
+                    <div class="container">
+                            @if(session('success'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                        </div>
                     <tbody>
                     @foreach ($data as $equipe)
                         <tr>
@@ -37,14 +46,17 @@
                             </td>
                             <td>
                             <a class="btn btn-sm btn-info"
-                                href="/doc-api/membres?ide={{$equipe->idequipe}}"
+                                href="/collecter/{{ $equipe->idequipe }}"
                                 onclick="return confirm('Êtes-vous sûr de vouloir envoyer une demande de collecte de données ? La demande sera tracée et les données vous seront envoyées par mail');">
                                     Demande de collecte de données
                                 </a>
                             </td>
+                    
 
                         </tr>
+                        
                     @endforeach
+                    
                     </tbody>
                 </table>
             </div>
