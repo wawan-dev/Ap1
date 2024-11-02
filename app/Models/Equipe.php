@@ -65,4 +65,6 @@ class Equipe extends Model
     {
         return $this->hasMany(Token::class, 'idequipe');
     }
+
+   
 }

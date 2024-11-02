@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Collecter extends Model
 {
     use HasFactory;
-    protected $table = 'collecter';
+    protected $table = 'COLLECTER';
 
-    protected $primaryKey = ['idequipe', 'idadministrateur', 'date'];
+    public $incrementing = false;
     protected $fillable = ['idequipe', 'idadministrateur', 'date', 'commentaire'];
 
 

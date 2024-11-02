@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Utils\SessionHelpers;
 use App\Models\Administrateur;
 use App\Http\Controllers\Controller;
+use App\Models\Collecter;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\BinaryOp\Equal;
 
@@ -323,6 +324,15 @@ class EquipeController extends Controller
 
         $admin = SessionHelpers::getConnectedAdmin();
 
+        
+        $collecte = new Collecter();
+        $collecte->idequipe = $equipe->idequipe;
+        $collecte->idadministrateur =$admin->idadministrateur ;
+        $collecte->date = now();
+        $collecte->save();
+        
+    
+
         if (file_exists($filePath)) {
             
             EmailHelpers::sendEmail(
@@ -341,4 +351,6 @@ class EquipeController extends Controller
     
         
     }
+
+    
 }
