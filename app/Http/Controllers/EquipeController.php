@@ -66,16 +66,14 @@ class EquipeController extends Controller
             return redirect("/login")->withErrors(['errors' => "Aucune équipe n'a été trouvée avec cet email."]);
         }
 
-        // Connexion de l'équipe
-        SessionHelpers::login($equipe);
-
-        // Redirection vers la page de profil de l'équipe
+        session(['login' => $equipe->login]);
+        
         return redirect("/2FA");
     }
 
 
     public function code_2FA(Request $request) {
-        $equipe= Equipe::where('login', 'email')->first();
+        $equipe= Equipe::where('login', session('login'))->first();
         $request->validate([
             '2FA' => 'required|numeric', // Assurez-vous que le nom du champ correspond à celui du formulaire
         ]);
@@ -93,9 +91,9 @@ class EquipeController extends Controller
     }
 
 
-    public function double_auth(Request $request) {
+    public function double_auth() {
         // Récupérer l'utilisateur authentifié
-        $equipe= Equipe::where('login', 'email')->first();
+        $equipe= Equipe::where('login', session('login'))->first();
         
         // Vérifier que l'utilisateur a une clé secrète configurée
         if (!$equipe->google2fa_secret) {
