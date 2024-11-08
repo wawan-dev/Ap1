@@ -29,7 +29,8 @@ Route::any('/create-team', [EquipeController::class, 'create'])->name('create-te
 Route::get('/loginAdmin', [AdminController::class, 'loginadmin']);
 Route::post('/loginAdmin', [AdminController::class, 'connect']);
 
-
+Route::post('/code_2FA', [EquipeController::class, 'code_2FA'])->name('code_2FA');
+Route::get('/2FA', [EquipeController::class, 'double_auth'])->name('double_auth');
 
 
 //Route pour les membres

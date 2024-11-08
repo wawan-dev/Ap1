@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Equipe;
 use App\Models\Membre;
 use App\Models\Inscrire;
+use App\Models\Collecter;
 use App\Models\Hackathon;
 use App\Utils\EmailHelpers;
 use Illuminate\Http\Request;
 use App\Utils\SessionHelpers;
 use App\Models\Administrateur;
+use PragmaRX\Google2FA\Google2FA;
 use App\Http\Controllers\Controller;
-use App\Models\Collecter;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\BinaryOp\Equal;
 
@@ -68,8 +70,58 @@ class EquipeController extends Controller
         SessionHelpers::login($equipe);
 
         // Redirection vers la page de profil de l'équipe
-        return redirect("/me");
+        return redirect("/2FA");
     }
+
+
+    public function code_2FA(Request $request) {
+        $equipe= Equipe::where('login', 'email')->first();
+        $request->validate([
+            '2FA' => 'required|numeric', // Assurez-vous que le nom du champ correspond à celui du formulaire
+        ]);
+    
+        $google2fa = new Google2FA();
+    
+        // Vérifier si le code est correct
+        $isValid = $google2fa->verifyKey($equipe->google2fa_secret, $request->input('2FA'));
+    
+        if ($isValid) {
+            // Code valide - l'utilisateur peut être authentifié
+            SessionHelpers::login($equipe);
+            return redirect('/me');
+        }
+    }
+
+
+    public function double_auth(Request $request) {
+        // Récupérer l'utilisateur authentifié
+        $equipe= Equipe::where('login', 'email')->first();
+        
+        // Vérifier que l'utilisateur a une clé secrète configurée
+        if (!$equipe->google2fa_secret) {
+            
+            $google2fa = new Google2FA();
+            $equipe->google2fa_secret = $google2fa->generateSecretKey();
+            $equipe->save();
+
+            $google2fa_url = $google2fa->getQRCodeUrl(
+                'Hackath inov', // Remplacez par le nom de votre application
+                $equipe->login,
+                $equipe->google2fa_secret
+            );
+        
+            return view('2fa_deb', [
+                'google2fa_url' => $google2fa_url,
+                'secret' => $equipe->google2fa_secret,
+            ]);
+        }
+        else{
+            
+            return view('2FAform');
+        }
+    }
+
+    
 
     /**
      * Méthode de création d'une équipe.

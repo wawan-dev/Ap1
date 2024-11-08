@@ -20,7 +20,10 @@ class historiqueController extends Controller
     public function filtrer_n(Request $request)
     {
         $equipe = SessionHelpers::getConnected();
-        $inscription = Inscrire::getinscription($equipe->idequipe);
+        if($equipe != null){
+            $inscription = Inscrire::getinscription($equipe->idequipe);
+        }
+        
         $query = Hackathon::query();
         $currentDate = now();
 
