@@ -67,15 +67,18 @@ class EquipeController extends Controller
         }
 
         session(['login' => $equipe->login]);
-        
-        return redirect("/2FA");
+        if($equipe->active == 0 ){
+            SessionHelpers::login($equipe);
+            return redirect("/me");
+        }else{
+        return redirect("/2FA");}
     }
 
 
     public function code_2FA(Request $request) {
         $equipe= Equipe::where('login', session('login'))->first();
         $request->validate([
-            '2FA' => 'required|numeric', // Assurez-vous que le nom du champ correspond à celui du formulaire
+            '2FA' => 'required|string', // Assurez-vous que le nom du champ correspond à celui du formulaire
         ]);
     
         $google2fa = new Google2FA();
@@ -88,6 +91,7 @@ class EquipeController extends Controller
             SessionHelpers::login($equipe);
             return redirect('/me');
         }
+        else{return redirect('/2FA');}
     }
 
 
