@@ -2,6 +2,8 @@
 
 @section('title', ' - Mon équipe')
 
+
+
 @section('content')
     <div class="d-flex flex-column justify-content-center align-items-center min-vh-100 bg fullContainer">
 
@@ -50,7 +52,17 @@
                         <a href="/modif_equipe/{{$connected->idequipe}}" class="btn btn-primary btn-small">Modifier équipe</a>
                         <a href="/logout" class="btn btn-danger btn-small">Déconnexion</a>
                     </div>
-                </div>
+                    
+                    <form action="{{ route('check2FA') }}" method="POST">
+                        @csrf
+                        <div class="p-5">
+                            <label for="active">Activer la double authentification : </label>
+                            <input type="checkbox" name="active2FA" 
+                                {{ $connected->active == 1 ? 'checked' : '' }}
+                                onchange="this.form.submit()">
+                        </div>
+                    </form>
+                    </div>
             </div>
             
             <div class="col-8">

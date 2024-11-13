@@ -15,7 +15,7 @@ class Equipe extends Model
     protected $primaryKey = 'idequipe';
     public $timestamps = false;
 
-    protected $fillable = ['nomequipe', 'lienprototype', 'nbparticipants', 'login', 'password','google2fa_secret','cle_secret','active'];
+    protected $fillable = ['nomequipe', 'lienprototype', 'nbparticipants', 'login', 'password','google2fa_secret','cle_secret','cle_secret_verif','active'];
 
     /**
      * Retourne les équipes inscrites à un hackathon.

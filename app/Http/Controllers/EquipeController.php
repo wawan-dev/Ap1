@@ -8,6 +8,7 @@ use App\Models\Inscrire;
 use App\Models\Collecter;
 use App\Models\Hackathon;
 use App\Utils\EmailHelpers;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Utils\SessionHelpers;
 use App\Models\Administrateur;
@@ -101,7 +102,10 @@ class EquipeController extends Controller
         
         // Vérifier que l'utilisateur a une clé secrète configurée
         if (!$equipe->google2fa_secret) {
-            
+
+            $cle_secret = Str::random(10);
+            $equipe->cle_secret = $cle_secret;
+            $equipe->active = 1;
             $google2fa = new Google2FA();
             $equipe->google2fa_secret = $google2fa->generateSecretKey();
             $equipe->save();
@@ -115,12 +119,37 @@ class EquipeController extends Controller
             return view('2fa_deb', [
                 'google2fa_url' => $google2fa_url,
                 'secret' => $equipe->google2fa_secret,
+                'cle_secret'=> $equipe->cle_secret,
             ]);
         }
         else{
             
             return view('2FAform');
         }
+    }
+
+    public function check2FA(Request $request)
+    {
+        $equipe= Equipe::where('login', session('login'))->first();
+        if ($request->has('active2FA')) {
+            return redirect("/2FA") ;
+        }
+
+        else{
+            return view("retirer_auth");
+            $equipe->active = 0;
+            $equipe->google2fa_secret = null;
+            $equipe->cle_secret = null;
+            $equipe->save();
+            SessionHelpers::login($equipe);
+            return redirect("/me");
+        }
+    }
+
+
+    public function dir2fa(){
+
+        return view('2FAform');
     }
 
     
@@ -181,6 +210,7 @@ class EquipeController extends Controller
             $equipe->lienprototype = $request->input('lien');
             $equipe->login = $request->input('email');
             $equipe->password = bcrypt($request->input('password'));
+            $equipe->active = 0;
             $equipe->save();
 
             // Envoi d'un email permettant de confirmer l'inscription

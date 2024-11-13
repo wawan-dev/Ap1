@@ -31,6 +31,9 @@ Route::post('/loginAdmin', [AdminController::class, 'connect']);
 
 Route::post('/code_2FA', [EquipeController::class, 'code_2FA'])->name('code_2FA');
 Route::get('/2FA', [EquipeController::class, 'double_auth'])->name('double_auth');
+Route::get('/2fa', [EquipeController::class, 'dir2fa'])->name('2fa');
+Route::post('/check2FA', [EquipeController::class, 'check2FA'])->name('check2FA');
+
 
 
 //Route pour les membres
