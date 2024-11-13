@@ -152,6 +152,14 @@ class EquipeController extends Controller
         return view('2FAform');
     }
 
+    public function retirer_auth(Request $request){
+        $equipe= Equipe::where('login', session('login'))->first();
+        $equipe->cle_secret_verif = $request->get('code_secret');
+        $equipe->save();
+        SessionHelpers::login($equipe);
+        return redirect('/me');
+    }
+
     
 
     /**

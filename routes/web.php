@@ -57,6 +57,7 @@ Route::middleware(isEquipeConnected::class)->group(function () {
 
     Route::get('/commentaire', [CommentaireController::class, 'commenter'])->name('commentaire');
     Route::post('/ajouter_commentaire', [CommentaireController::class, 'ajouter_commenter'])->name('ajouter_commentaire');
+    Route::post('/retirer_auth', [EquipeController::class, 'retirer_auth'])->name('retirer_auth');
     
 });
 
