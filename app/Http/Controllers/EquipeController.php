@@ -416,7 +416,7 @@ class EquipeController extends Controller
         $data = [
             'equipe' => $equipe->toArray(),
             'membres' => $equipe->membres->toArray(),
-            'log' => $equipe->logs
+            'log' => $equipe->logs->toArray(),
         ];
 
         

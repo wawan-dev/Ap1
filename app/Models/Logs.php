@@ -24,6 +24,6 @@ class Logs extends Model
      */
     public function equipe()
     {
-        return $this->belongsTo(Equipe::class, 'id_equipe');
+        return $this->belongsTo(Equipe::class, 'idequipe');
     }
 }
