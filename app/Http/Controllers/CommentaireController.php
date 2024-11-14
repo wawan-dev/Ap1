@@ -45,7 +45,7 @@ class CommentaireController extends Controller
             ->where('idequipe', $equipe->idequipe)
             ->first();
 
-        if (!$inscription || $inscription->commentaire != null) {
+        if (!$inscription || $inscription->datedesinscription != null) {
             // Si l'inscription n'existe pas, retournez un message d'erreur
             return redirect()->back()->withErrors(['Erreur' => "Seuls les participants ayant participé au hackathon peuvent commenter !"])->withInput();
         }
