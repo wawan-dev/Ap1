@@ -14,6 +14,7 @@ use App\Utils\SessionHelpers;
 use App\Models\Administrateur;
 use PragmaRX\Google2FA\Google2FA;
 use App\Http\Controllers\Controller;
+use App\Models\Logs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\BinaryOp\Equal;
@@ -70,6 +71,10 @@ class EquipeController extends Controller
         session(['login' => $equipe->login]);
         if($equipe->active == 0 ){
             SessionHelpers::login($equipe);
+            $log = new Logs();
+            $log->idequipe = $equipe->idequipe;
+            $log->description = "Connection de l'équipe";
+            $log->save();
             return redirect("/me");
         }else{
         return redirect("/2FA");}
@@ -110,6 +115,11 @@ class EquipeController extends Controller
             $equipe->google2fa_secret = $google2fa->generateSecretKey();
             $equipe->save();
 
+            $log = new Logs();
+            $log->idequipe = $equipe->idequipe;
+            $log->description = "Ajout du 2FA pour l'équipe";
+            $log->save();
+
             $google2fa_url = $google2fa->getQRCodeUrl(
                 'Hackath inov', // Remplacez par le nom de votre application
                 $equipe->login,
@@ -136,6 +146,10 @@ class EquipeController extends Controller
         }
 
         else{
+            $log = new Logs();
+            $log->idequipe = $equipe->idequipe;
+            $log->description = "Demande pour retirer le 2FA";
+            $log->save();
             return view("retirer_auth");
             $equipe->active = 0;
             $equipe->google2fa_secret = null;
@@ -402,6 +416,7 @@ class EquipeController extends Controller
         $data = [
             'equipe' => $equipe->toArray(),
             'membres' => $equipe->membres->toArray(),
+            'log' => $equipe->logs
         ];
 
         
