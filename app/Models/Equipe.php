@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use App\Models\Logs;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -55,6 +56,10 @@ class Equipe extends Model
     {
         return $this->belongsToMany(Hackathon::class, 'INSCRIRE', 'idequipe', 'idhackathon')->withPivot('dateinscription');
     }
+
+    public function Logs()
+    {
+    return $this->hasMany(Logs::class, 'id_equipe');}
 
     public function inscrit()
     {
