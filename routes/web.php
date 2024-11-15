@@ -77,6 +77,7 @@ Route::get('/historique', [historiqueController::class, 'Listerhackaton'])->name
 Route::get('/filtre_nom', [historiqueController::class, 'filtrer_n'])->name('filtrer_n');
 
 Route::get('/statistique', [StatistiqueController::class, 'statistique'])->name('statistique');
+Route::get('/statistique_hack', [StatistiqueController::class, 'statistique_hack'])->name('statistique_hack');
 
 Route::get('/fetch-comments/{id}', [CommentaireController::class, 'fetchComments'])->name('fetch-comments');
 
