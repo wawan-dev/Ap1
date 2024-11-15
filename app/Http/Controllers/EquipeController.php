@@ -138,7 +138,7 @@ class EquipeController extends Controller
             ]);
         }
         else{
-            dd($equipe);
+            
             return view('2FAform');
         }
     }

@@ -35,6 +35,7 @@
             <li class="nav-item"><a href="{{ route("home") }}" class="nav-link white-link @if (Route::is('home')) {{'active-link'}} @endif" aria-current="page">Home</a></li>
             <li class="nav-item"><a href="{{ route("about") }}" class="nav-link white-link @if (Route::is('about')) {{'active-link'}} @endif">About</a></li>
             <li class="nav-item"><a href="{{ route("historique") }}" class="nav-link white-link @if (Route::is('historique')) {{'active-link'}} @endif">Historique hackathon</a></li>
+            <li class="nav-item"><a href="{{ route("statistique") }}" class="nav-link white-link @if (Route::is('historique')) {{'active-link'}} @endif">Statistique</a></li>
             <li class="flex-grow-1"></li>
 
             <?php if (!SessionHelpers::isConnected()) { ?>

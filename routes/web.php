@@ -8,6 +8,7 @@ use App\Http\Controllers\HackathonController;
 use App\Http\Controllers\historiqueController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MembreController;
+use App\Http\Controllers\StatistiqueController;
 use App\Http\Middleware\IsAdminConnected;
 use App\Http\Middleware\IsEquipeConnected;
 use App\Models\Administrateur;
@@ -74,6 +75,8 @@ Route::middleware(IsAdminConnected::class)->group(function () {
 
 Route::get('/historique', [historiqueController::class, 'Listerhackaton'])->name('historique');
 Route::get('/filtre_nom', [historiqueController::class, 'filtrer_n'])->name('filtrer_n');
+
+Route::get('/statistique', [StatistiqueController::class, 'statistique'])->name('statistique');
 
 Route::get('/fetch-comments/{id}', [CommentaireController::class, 'fetchComments'])->name('fetch-comments');
 
