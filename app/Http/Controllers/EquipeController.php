@@ -58,7 +58,7 @@ class EquipeController extends Controller
 
         // Si l'équipe n'existe pas, on redirige vers la page de connexion avec un message d'erreur
         if (!$equipe) {
-            return redirect("/login")->withErrors(['errors' => "Aucune équipess n'a été trouvée avec cet email."]);
+            return redirect("/login")->withErrors(['errors' => "Aucune équipes n'a été trouvée avec cet email."]);
         }
 
         // Si le mot de passe est incorrect, on redirige vers la page de connexion avec un message d'erreur
@@ -95,7 +95,12 @@ class EquipeController extends Controller
         if ($isValid) {
             // Code valide - l'utilisateur peut être authentifié
             SessionHelpers::login($equipe);
+            $log = new Logs();
+            $log->idequipe = $equipe->idequipe;
+            $log->description = "Connection de l'équipe";
+            $log->save();
             return redirect('/me');
+            
         }
         else{return redirect('/2FA');}
     }
@@ -133,7 +138,7 @@ class EquipeController extends Controller
             ]);
         }
         else{
-            
+            dd($equipe);
             return view('2FAform');
         }
     }
@@ -240,6 +245,8 @@ class EquipeController extends Controller
 
             // Connexion de l'équipe
             SessionHelpers::login($equipe);
+
+            session(['login' => $equipe->login]);
 
             // L'équipe rejoindra le hackathon actif.
             // On crée une inscription pour l'équipe (table INSCRIRE)

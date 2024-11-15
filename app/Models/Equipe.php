@@ -32,6 +32,7 @@ class Equipe extends Model
         $equipes = DB::table('EQUIPE')
             ->join('INSCRIRE', 'EQUIPE.idequipe', '=', 'INSCRIRE.idequipe')
             ->where('INSCRIRE.idhackathon', $idHackathon)
+            ->whereNull('INSCRIRE.datedesinscription')
             ->get()
             ->toArray();
 
