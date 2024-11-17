@@ -29,16 +29,17 @@ body {
 }
 
 .bg {
-    background-image: url(/img/images.jpg);
-    background-size: cover;
+    background-image: url(/img/images.jpg); /* URL de l'image de fond */
+    background-size: cover; /* Adapte l'image pour couvrir tout l'écran */
+    background-attachment: fixed; /* Rend le fond fixe */
+    background-position: center; /* Centre l'image */
+    background-repeat: no-repeat; /* Empêche la répétition de l'image */
 }
 
 .fullContainer {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
+    position: relative; /* Remplace `absolute` par `relative` */
+    min-height: 100vh; /* S'assure que le conteneur couvre au moins la hauteur de l'écran */
+    width: 100%; /* Assure que le conteneur prend toute la largeur */
 }
 
 .cardRadius {

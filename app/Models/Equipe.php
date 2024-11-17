@@ -41,6 +41,24 @@ class Equipe extends Model
 
     }
 
+    public static function getEquipesDesInHackhon($idHackathon)
+    {
+        // Ici on utilise DB::table pour faire une requête SQL directe
+        // Cela permet de faire des requêtes comme on le ferait en SQL mais
+        // en utilisant les avantages de Laravel (sécurité, etc.)
+        // Tout en garand le type de retour (tableau d'objets Equipe)
+        $equipes = DB::table('EQUIPE')
+            ->join('INSCRIRE', 'EQUIPE.idequipe', '=', 'INSCRIRE.idequipe')
+            ->where('INSCRIRE.idhackathon', $idHackathon)
+            ->whereNotNull('INSCRIRE.datedesinscription')
+            ->get()
+            ->toArray();
+
+        // Permet de transformer les objets stdClass en objets Equipe
+        return Equipe::hydrate($equipes);
+
+    }
+
     public static function getByToken($token)
     {
         return Token::where('uuid', $token)->first()->equipe;

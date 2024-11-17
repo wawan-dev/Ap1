@@ -56,8 +56,10 @@
                     <form action="{{ route('check2FA') }}" method="POST">
                         @csrf
                         <div class="p-5">
+                            
                             <label for="active">Activer la double authentification : </label>
                             <input type="checkbox" name="active2FA" 
+                           
                                 {{ $connected->active == 1 ? 'checked' : '' }}
                                 onchange="this.form.submit()">
                         </div>

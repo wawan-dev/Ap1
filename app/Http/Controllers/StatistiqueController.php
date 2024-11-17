@@ -12,56 +12,86 @@ use App\Models\Membre;
 
 class StatistiqueController extends Controller
 {
-    public function statistique(Request $request){
+    public function statistique(Request $request)
+{
+    // Année par défaut (l'année en cours)
+    $year = $request->get('year', now()->year);
 
-            // Si aucune année n'est précisée, utilisez l'année en cours par défaut
-        $year = $request->get('year', now()->year); 
+    // Filtrer par ville si une ville est précisée dans la requête
+    $selectedVille = $request->get('ville');
 
-        // Obtenez tous les mois de l'année, même ceux avec 0 hackathons
-        $months = collect(range(1, 12)); // Crée un tableau de 1 à 12 pour les mois
-        $monthHackathons = DB::table('HACKATHON')
-            ->select(DB::raw('MONTH(dateheuredebuth) as month, COUNT(*) as count'))
-            ->whereYear('dateheuredebuth', $year) // Filtre par l'année
-            ->groupBy('month')
-            ->get()
-            ->keyBy('month'); // Transforme le résultat en un tableau associatif avec le mois comme clé
+    // Mois pour la vue (1 à 12)
+    $months = collect(range(1, 12));
 
-        // Préparez les données pour chaque mois
-        $hackathonsByMonth = $months->mapWithKeys(function ($month) use ($monthHackathons) {
-            return [$month => $monthHackathons->get($month, (object)['count' => 0])];
-        });
+    // Hackathons par mois pour l'année donnée
+    $monthHackathons = DB::table('HACKATHON')
+        ->select(DB::raw('MONTH(dateheuredebuth) as month, COUNT(*) as count'))
+        ->whereYear('dateheuredebuth', $year)
+        ->groupBy('month')
+        ->get()
+        ->keyBy('month');
 
-        // Récupérer les années disponibles dans la base pour remplir le champ de sélection
-        $years = DB::table('HACKATHON')
-            ->select(DB::raw('DISTINCT YEAR(dateheuredebuth) as year'))
-            ->orderBy('year', 'desc')
-            ->pluck('year');
+    $hackathonsByMonth = $months->mapWithKeys(function ($month) use ($monthHackathons) {
+        return [$month => $monthHackathons->get($month, (object)['count' => 0])];
+    });
 
-        $visits = DB::table('LOGS')
-            ->selectRaw('DATE(created_at) as day, COUNT(*) as visits')
-            ->where('description', 'like', '%Connection%')
-            ->where('created_at', '>=', Carbon::now()->subDays(5))
-            ->groupBy(DB::raw('DATE(created_at)'))
-            ->orderBy('day', 'desc')
-            ->get();
+    // Années disponibles
+    $years = DB::table('HACKATHON')
+        ->select(DB::raw('DISTINCT YEAR(dateheuredebuth) as year'))
+        ->orderBy('year', 'desc')
+        ->pluck('year');
 
-        $nbequipe = Equipe::all()->count();
-        $nbmembre = Membre::all()->count();
+    // Nombre de hackathons par ville
+    $hackathonsByVilleQuery = DB::table('HACKATHON')
+        ->select(DB::raw('ville, COUNT(*) as count'))
+        ->groupBy('ville')
+        ->orderBy('count', 'desc');
 
-
-        return view('statistique', [
-            'hackathonsByMonth' => $hackathonsByMonth,
-            'years' => $years,
-            'selectedYear' => $year,
-            'visits' => $visits,
-            'nbequipe' => $nbequipe,
-            'nbmembre' => $nbmembre,
-        ]);
+    // Filtrer par ville si sélectionnée
+    if ($selectedVille) {
+        $hackathonsByVilleQuery->where('ville', $selectedVille);
     }
 
-    public function statistique_hack(Request $request){
+    $hackathonsByVille = $hackathonsByVilleQuery->get();
 
+    // Visites des 5 derniers jours
+    $visits = DB::table('LOGS')
+        ->selectRaw('DATE(created_at) as day, COUNT(*) as visits')
+        ->where('description', 'like', '%Connection%')
+        ->where('created_at', '>=', now()->subDays(5))
+        ->groupBy(DB::raw('DATE(created_at)'))
+        ->orderBy('day', 'desc')
+        ->get();
+
+    // Statistiques globales
+    $nbequipe = Equipe::count();
+    $nbmembre = Membre::count();
+
+    return view('statistique', [
+        'hackathonsByMonth' => $hackathonsByMonth,
+        'years' => $years,
+        'selectedYear' => $year,
+        'selectedVille' => $selectedVille,
+        'hackathonsByVille' => $hackathonsByVille,
+        'visits' => $visits,
+        'nbequipe' => $nbequipe,
+        'nbmembre' => $nbmembre,
+    ]);
+}
+
+    public function statistique_hack(Request $request){
+        $idh = $request->query('idh');
+        $hackathon = Hackathon::find($idh);
+
+        $equipehack = Equipe::getEquipesInHackhon($hackathon->idhackathon);
+        $nb_equipedes = Equipe::getEquipesDesInHackhon($hackathon->idhackathon);
+        $nb_equipedes = $nb_equipedes->count();
+
+        $nb_equipe = $equipehack->count();
         
+        $nb_membre = Membre::getMembreInHackhon($idh);
+
+        return view('statistique_hack', ["hackathon" => $hackathon, "nb_equipe" => $nb_equipe, "nb_membre" => $nb_membre, "nb_equipedes" => $nb_equipedes]);
     }
 
 }

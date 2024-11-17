@@ -11,11 +11,10 @@
         <h1>Bienvenue sur Hackat'innov 👋</h1>
         <div class="col-12 col-md-9 d-flex">
         <?php
-        // Conversion du blob en base64
-        $base64 = base64_encode($hackathon->affiche);
+        
         ?>
 
-        <img src="data:image/jpeg;base64,<?= $base64 ?>" class="affiche d-md-block d-none" alt="Affiche de l'évènement.">
+        <img src="img/affiche.png" class="affiche d-md-block d-none" alt="Affiche de l'évènement.">
             <div class="px-5" v-if="!participantsIsShown">
                 <h2><?= $hackathon->thematique ?></h2>
                 <p><?= nl2br($hackathon->objectifs) ?></p>
@@ -76,6 +75,8 @@
                     @if(\Carbon\Carbon::now()->gt($hackathon->dateheurefinh))
                         <a class="btn bg-green m-2 button-home" href="{{ route('commentaire', ['idh' => $hackathon->idhackathon]) }}">Commentaire</a>
                     @endif
+
+                    <a class="btn bg-green m-2 button-home" href="{{ route('statistique_hack', ['idh' => $hackathon->idhackathon]) }}">Statistique</a>
 
                     <a class="btn bg-green m-2 button-home" href="#" @click.prevent="getParticipants">
                         <span v-if="!loading">Les participants</span>
