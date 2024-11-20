@@ -3,14 +3,14 @@
 @section('title', ' - À propos')
 
 @section('content')
-    <div class="container">
-
-    <div class="text-center my-5">
+    <div  class="d-flex flex-column justify-content-center align-items-center min-vh-100 bg ">
+    
+    <div class="text-center my-5 " style="background-color: rgba(128, 128, 128, 0.5); padding:20px; border-radius: 20px;">
             <h1>À propos des Hackathons</h1>
             <p>Les hackathons sont des événements collaboratifs où des développeurs, des designers et des entrepreneurs se réunissent pour innover et créer des solutions en un temps limité.</p>
         </div>
 
-        <div class="mb-4">
+        <div class="mb-4" style="background-color: rgba(128, 128, 128, 0.5); padding:20px; border-radius: 20px;">
             <h2>Pourquoi Participer à un Hackathon ?</h2>
             <ul>
                 <li>**Innovation** : Créez des prototypes et des solutions innovantes.</li>
@@ -20,7 +20,7 @@
             </ul>
         </div>
 
-        <div class="mb-4">
+        <div class="mb-4" style="background-color: rgba(128, 128, 128, 0.5); padding:20px; border-radius: 20px;">
             <h2>Règles de Participation</h2>
             <p>Pour garantir une expérience positive pour tous les participants, nous avons mis en place quelques règles :</p>
             <ul>
@@ -31,14 +31,14 @@
             </ul>
         </div>
         
-        <div class="text-center my-5">
+        <div class="text-center my-5" style="background-color: rgba(128, 128, 128, 0.5); padding:20px; border-radius: 20px;">
             <h1>Nos convictions</h1>
             <p>A l'oragnisation des hackaton, nous nous engageons à fournir un service de qualité qui respecte les droits et la vie privée de nos utilisateurs. Nous croyons en la transparence et en l'importance de protéger vos données personnelles.</p>
         </div>
         <br>
         <br>
         <br>
-        <div class="mb-4">
+        <div class="mb-4" style="background-color: rgba(128, 128, 128, 0.5); padding:20px; border-radius: 20px;">
             
             <h3>Protection des données personnelles (RGPD)</h3>
             <p>Conformément au Règlement Général sur la Protection des Données (RGPD), nous vous informons que toutes les données collectées sur notre plateforme sont traitées de manière sécurisée et transparente. Vous avez le droit d'accéder à vos données, de les rectifier ou de demander leur suppression.</p>
@@ -51,7 +51,7 @@
         <br>
         <br>
         <br>
-        <div class="text-center">
+        <div class="text-center" style="background-color: rgba(128, 128, 128, 0.5); padding:20px; border-radius: 20px;">
             <h2>Nous Contacter</h2>
             <p>Pour toute question ou demande d'information supplémentaire, n'hésitez pas à nous contacter à <a href="mailto:contact@cejm.fr">hackaton@gmail.fr</a>.</p>
         </div>

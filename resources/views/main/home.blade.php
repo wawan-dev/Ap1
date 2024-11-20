@@ -7,14 +7,21 @@
 @endsection
 
 @section('content')
-    <div v-scope v-cloak class="d-flex flex-column justify-content-center align-items-center bannerHome">
-        <h1>Bienvenue sur Hackat'innov 👋</h1>
+    <div v-scope v-cloak class="d-flex flex-column justify-content-center align-items-center min-vh-100 bg ">
+        <div class="row">
+            <div class="col-10">
+                <h1>Bienvenue sur Hackat'innov 👋</h1>
+            </div>
+            <div class="col-2">
+            <img src="/img/logo.png" style="padding-left: 50%; " alt="Affiche de l'évènement.">
+            </div>
+        </div>
         <div class="col-12 col-md-9 d-flex">
         <?php
         
         ?>
 
-        <img src="img/affiche.png" class="affiche d-md-block d-none" alt="Affiche de l'évènement.">
+        <img src="/img/affiche.png" class="affiche d-md-block d-none" alt="Affiche de l'évènement.">
             <div class="px-5" v-if="!participantsIsShown">
                 <h2><?= $hackathon->thematique ?></h2>
                 <p><?= nl2br($hackathon->objectifs) ?></p>

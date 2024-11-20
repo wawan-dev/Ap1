@@ -26,7 +26,7 @@
                         <div class="row justify-content-center">
                             <div class="col-md-3">
                                 
-                                <select id="year" name="year" class="form-select">
+                                <select id="year" name="year" class="form-select" onchange="this.form.submit()">
                                     @foreach ($years as $year)
                                         <option value="{{ $year }}" 
                                                 {{ $selectedYear == $year ? 'selected' : '' }}>
@@ -35,9 +35,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-2 align-self-end">
-                                <button type="submit" class="btn btn-primary w-100">Filtrer</button>
-                            </div>
+                          
                         </div>
                     </form>
                         <div class="table-responsive">

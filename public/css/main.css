@@ -29,7 +29,7 @@ body {
 }
 
 .bg {
-    background-image: url(/img/images.jpg); /* URL de l'image de fond */
+    background-image: url(/img/image.jpg); /* URL de l'image de fond */
     background-size: cover; /* Adapte l'image pour couvrir tout l'écran */
     background-attachment: fixed; /* Rend le fond fixe */
     background-position: center; /* Centre l'image */
