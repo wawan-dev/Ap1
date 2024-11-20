@@ -102,7 +102,7 @@ class EquipeController extends Controller
             return redirect('/me');
             
         }
-        else{return redirect('/2FA');}
+        else{return redirect('/2FA')->withErrors(['errors' => "Le code saisit n'est pas le bon"]);}
     }
 
 
@@ -111,7 +111,7 @@ class EquipeController extends Controller
         $equipe= Equipe::where('login', session('login'))->first();
         
         // Vérifier que l'utilisateur a une clé secrète configurée
-        dd(session('login'));
+        
         if (!$equipe->google2fa_secret) {
 
             $cle_secret = Str::random(10);

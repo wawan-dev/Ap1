@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="documentation">
-    <a class="btn btn-danger mx-3" href="/logoutadmin">Se déconnecter</a>
+    <a class="btn btn-danger mx-3" style="margin: 20px;" href="/logoutadmin">Se déconnecter</a>
     <br>
         <div class="card w-200">
             <div class="card-body">
