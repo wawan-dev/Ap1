@@ -13,7 +13,7 @@
                 <h1>Bienvenue sur Hackat'innov 👋</h1>
             </div>
             <div class="col-2">
-            <img src="/img/logo.png" style="padding-left: 50%; " alt="Affiche de l'évènement.">
+            <img src="/img/logo.png" style="padding-left: 50%; padding-bottom:20px; " alt="Affiche de l'évènement.">
             </div>
         </div>
         <div class="col-12 col-md-9 d-flex">
@@ -22,7 +22,7 @@
         ?>
 
         <img src="/img/affiche.png" class="affiche d-md-block d-none" alt="Affiche de l'évènement.">
-            <div class="px-5" v-if="!participantsIsShown">
+            <div class="px-5" v-if="!participantsIsShown" style="background-color: rgba(128, 128, 128, 0.7); margin-left:20px; padding:20px; border-radius: 20px;">
                 <h2><?= $hackathon->thematique ?></h2>
                 <p><?= nl2br($hackathon->objectifs) ?></p>
                 <p><?= nl2br($hackathon->conditions) ?></p>

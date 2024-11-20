@@ -111,6 +111,7 @@ class EquipeController extends Controller
         $equipe= Equipe::where('login', session('login'))->first();
         
         // Vérifier que l'utilisateur a une clé secrète configurée
+        dd(session('login'));
         if (!$equipe->google2fa_secret) {
 
             $cle_secret = Str::random(10);
@@ -409,6 +410,7 @@ class EquipeController extends Controller
                     return redirect("/modif_equipe/$idequipe")->withErrors(['errors' => "Votre nouveau mot de passe doit faire minimum 8 caractères"]);
                 }
             }
+            session(['login' => $equipe->login]);
             return redirect("/me")->with(['success' => "modification réussie !"]);
         }
         else{
